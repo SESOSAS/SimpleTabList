@@ -1,7 +1,6 @@
 package de.sesosas.simpletablist.commands;
 
 import de.sesosas.simpletablist.classes.CustomConfig;
-import de.sesosas.simpletablist.classes.Lists;
 import de.sesosas.simpletablist.classes.Nametag;
 import de.sesosas.simpletablist.message.MessageHandler;
 import de.sesosas.simpletablist.permissions.PermissionsHandler;
@@ -9,8 +8,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-
-import java.io.IOException;
 
 public class ChatCommands{
 
