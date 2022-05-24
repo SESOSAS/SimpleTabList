@@ -55,7 +55,7 @@ The TabList updates every 2 seconds.
 You can change Header and Footer of the TabList in the config.yml.
 
 # Dependencys
- - LuckPerms
+ - [LuckPerms](https://luckperms.net/download)
 
 # Future Plans
  - Animations
