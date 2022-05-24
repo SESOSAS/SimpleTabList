@@ -1,0 +1,9 @@
+name: SimpleTabList
+version: '${project.version}'
+main: de.sesosas.simpletablist.SimpleTabList
+authors: [ SESOSAS ]
+description: A TabList which is using LuckPerms Prefix and Suffixes
+depend: [LuckPerms]
+commands:
+  stl:
+    description: Command Help
