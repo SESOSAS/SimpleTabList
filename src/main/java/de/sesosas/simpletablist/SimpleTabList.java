@@ -48,6 +48,7 @@ public final class SimpleTabList extends JavaPlugin implements Listener {
         config.addDefault("Chat.Prefix", "§f[§cSTL§f]");
         config.addDefault("Chat.Separator", " >> ");
         config.addDefault("Chat.Colors", true);
+        config.addDefault("Homes.Use", true);
         config.addDefault("Homes.Amount", 5);
         config.addDefault("Plugin.ActionbarMessage", false);
         config.addDefault("Plugin.NoticeMe", "You need LuckPerms to get this Plugin to work!");

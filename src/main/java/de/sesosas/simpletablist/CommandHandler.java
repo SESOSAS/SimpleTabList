@@ -66,7 +66,9 @@ public class CommandHandler implements TabExecutor {
             arguments.add("chat");
 
             if(PermissionsHandler.hasPermission(player, "stl.home")){
-                arguments.add("homes");
+                if(SimpleTabList.getPlugin().config.getBoolean("Homes.Use")){
+                    arguments.add("homes");
+                }
             }
             if (PermissionsHandler.hasPermission(player, "stl.reload")) {
                 arguments.add("reload");
@@ -78,14 +80,16 @@ public class CommandHandler implements TabExecutor {
             CustomConfig.setup(player);
             FileConfiguration con = CustomConfig.get();
             if(args[0].equalsIgnoreCase("homes")){
-                if(PermissionsHandler.hasPermission(player, "stl.home.add")){
-                    arguments.add("add");
-                    arguments.add("remove");
-                    if(PermissionsHandler.hasPermission(player, "stl.home")){
-                        for(int i = 1; i <= SimpleTabList.getPlugin().config.getInt("Homes.Amount"); i++){
-                            if(con.get("Homes."+i) != null){
-                                if(!con.getString("Homes."+i+".Name").equalsIgnoreCase("Deleted")){
-                                    arguments.add(con.getString("Homes."+i+".Name"));
+                if(SimpleTabList.getPlugin().config.getBoolean("Homes.Use")){
+                    if(PermissionsHandler.hasPermission(player, "stl.home.add")){
+                        arguments.add("add");
+                        arguments.add("remove");
+                        if(PermissionsHandler.hasPermission(player, "stl.home")){
+                            for(int i = 1; i <= SimpleTabList.getPlugin().config.getInt("Homes.Amount"); i++){
+                                if(con.get("Homes."+i) != null){
+                                    if(!con.getString("Homes."+i+".Name").equalsIgnoreCase("Deleted")){
+                                        arguments.add(con.getString("Homes."+i+".Name"));
+                                    }
                                 }
                             }
                         }
@@ -119,6 +123,19 @@ public class CommandHandler implements TabExecutor {
                 }
             }
             else if(args[1].equalsIgnoreCase("remove")){
+                if(SimpleTabList.getPlugin().config.getBoolean("Homes.Use")){
+                    CustomConfig.setup(player);
+                    FileConfiguration con = CustomConfig.get();
+                    List<String> arguments = new ArrayList<>();
+                    for(int i = 1; i <= SimpleTabList.getPlugin().config.getInt("Homes.Amount"); i++){
+                        if(con.get("Homes."+i) != null){
+                            if(!con.getString("Homes."+i+".Name").equalsIgnoreCase("Deleted")){
+                                arguments.add(con.getString("Homes."+i+".Name"));
+                            }
+                        }
+                    }
+                    return arguments;
+                }
                 CustomConfig.setup(player);
                 FileConfiguration con = CustomConfig.get();
                 List<String> arguments = new ArrayList<>();
