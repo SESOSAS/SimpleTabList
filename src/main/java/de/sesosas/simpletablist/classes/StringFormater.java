@@ -28,7 +28,7 @@ public class StringFormater {
             if(SimpleTabList.getPlugin().config.getBoolean("Chat.Colors")){
                 return text
                         .replace("&", "§")
-                        .replace(ph("player_name"), Nametag.luckpermsName(player.getPlayer()))
+                        .replace(ph("player_name"), player.getDisplayName())
                         .replace(ph("player_health"), df.format(player.getPlayer().getHealth()))
                         .replace(ph("player_food"), df.format(player.getPlayer().getFoodLevel()))
                         .replace(ph("player_ping"), Integer.toString(player.getPlayer().getPing()))
@@ -38,7 +38,7 @@ public class StringFormater {
             }
             else{
                 return text
-                        .replace(ph("player_name"), Nametag.luckpermsName(player.getPlayer()))
+                        .replace(ph("player_name"), player.getDisplayName())
                         .replace(ph("player_health"), df.format(player.getPlayer().getHealth()))
                         .replace(ph("player_food"), df.format(player.getPlayer().getFoodLevel()))
                         .replace(ph("player_ping"), Integer.toString(player.getPlayer().getPing()))

@@ -42,14 +42,14 @@ public class ChatCommands{
                     CustomConfig.setup(target);
                     FileConfiguration con = CustomConfig.get();
                     if(con.getBoolean("Chat.Muted")){
-                        MessageHandler.Send(player, ChatColor.DARK_RED + "The Player " +Nametag.luckpermsName(target)+ ChatColor.DARK_RED +" is already muted!");
+                        MessageHandler.Send(player, ChatColor.DARK_RED + "The Player " +target.getDisplayName()+ ChatColor.DARK_RED +" is already muted!");
                     }
                     else{
                         con.set("Chat.Muted", true);
                         CustomConfig.save();
                         CustomConfig.reload();
                         MessageHandler.Send(target, ChatColor.YELLOW + "You got muted!");
-                        MessageHandler.Send(player, Nametag.luckpermsName(target) + ChatColor.YELLOW + " got muted now!");
+                        MessageHandler.Send(player, target.getDisplayName() + ChatColor.YELLOW + " got muted now!");
                     }
                 }
                 else{
@@ -71,10 +71,10 @@ public class ChatCommands{
                         CustomConfig.save();
                         CustomConfig.reload();
                         MessageHandler.Send(target, ChatColor.YELLOW + "You got unmuted!");
-                        MessageHandler.Send(player, Nametag.luckpermsName(target) + ChatColor.YELLOW + " got unmuted now!");
+                        MessageHandler.Send(player, target.getDisplayName() + ChatColor.YELLOW + " got unmuted now!");
                     }
                     else{
-                        MessageHandler.Send(player, ChatColor.DARK_RED + "The Player " +Nametag.luckpermsName(target)+ ChatColor.DARK_RED +" is not muted!");
+                        MessageHandler.Send(player, ChatColor.DARK_RED + "The Player " +target.getDisplayName()+ ChatColor.DARK_RED +" is not muted!");
                     }
                 }
             }
@@ -91,7 +91,7 @@ public class ChatCommands{
                     {
                         target.sendMessage("");
                     }
-                    MessageHandler.Send(player, ChatColor.AQUA + "Cleared the chat of "+ Nametag.luckpermsName(target));
+                    MessageHandler.Send(player, ChatColor.AQUA + "Cleared the chat of "+ target.getDisplayName());
                 }
                 catch (Exception e){
                     MessageHandler.Send(player, ChatColor.DARK_RED + "Couldn't clear the chat of "+args[2]);
