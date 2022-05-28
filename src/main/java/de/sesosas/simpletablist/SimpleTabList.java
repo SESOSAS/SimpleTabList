@@ -67,7 +67,7 @@ public final class SimpleTabList extends JavaPlugin implements Listener {
                 TabHeadFoot.Update();
             });
         }
-         */
+        */
 
         if(config.getBoolean("bstats.Use")){
             int id = 15221;

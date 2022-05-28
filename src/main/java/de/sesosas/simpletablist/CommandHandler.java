@@ -84,6 +84,7 @@ public class CommandHandler implements TabExecutor {
                     if(PermissionsHandler.hasPermission(player, "stl.home.add")){
                         arguments.add("add");
                         arguments.add("remove");
+                        arguments.add("set");
                         if(PermissionsHandler.hasPermission(player, "stl.home")){
                             for(int i = 1; i <= SimpleTabList.getPlugin().config.getInt("Homes.Amount"); i++){
                                 if(con.get("Homes."+i) != null){
@@ -136,17 +137,27 @@ public class CommandHandler implements TabExecutor {
                     }
                     return arguments;
                 }
-                CustomConfig.setup(player);
-                FileConfiguration con = CustomConfig.get();
-                List<String> arguments = new ArrayList<>();
-                for(int i = 1; i <= SimpleTabList.getPlugin().config.getInt("Homes.Amount"); i++){
-                    if(con.get("Homes."+i) != null){
-                        if(!con.getString("Homes."+i+".Name").equalsIgnoreCase("Deleted")){
-                            arguments.add(con.getString("Homes."+i+".Name"));
+                else{
+                    return null;
+                }
+            }
+            else if(args[1].equalsIgnoreCase("set")){
+                if(SimpleTabList.getPlugin().config.getBoolean("Homes.Use")){
+                    CustomConfig.setup(player);
+                    FileConfiguration con = CustomConfig.get();
+                    List<String> arguments = new ArrayList<>();
+                    for(int i = 1; i <= SimpleTabList.getPlugin().config.getInt("Homes.Amount"); i++){
+                        if(con.get("Homes."+i) != null){
+                            if(!con.getString("Homes."+i+".Name").equalsIgnoreCase("Deleted")){
+                                arguments.add(con.getString("Homes."+i+".Name"));
+                            }
                         }
                     }
+                    return arguments;
                 }
-                return arguments;
+                else{
+                    return null;
+                }
             }
             else{
                 if(PermissionsHandler.hasPermission(player, "stl.chat.clear.other")){

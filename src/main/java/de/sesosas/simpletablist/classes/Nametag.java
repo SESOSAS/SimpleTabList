@@ -8,13 +8,13 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 
 public class Nametag {
 
-    public static String luckpermsName(Player player){
+    public static void luckpermsName(Player player){
         RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
         if (provider != null) {
             LuckPerms api = provider.getProvider();
                 CachedMetaData metaData = api.getPlayerAdapter(Player.class).getMetaData(player);
 
-                String name = player.getDisplayName();
+                String name = player.getName();
                 String prefix = "";
                 String suffix = "";
 
@@ -25,11 +25,10 @@ public class Nametag {
                     suffix = StringFormater.Get(metaData.getSuffix());
                 }
 
-                return prefix + name + suffix;
+                player.setDisplayName(prefix + name + suffix);
         }
         else{
             System.out.println("Didn't found LuckPerms which is necessary for this Plugin!");
-            return player.getDisplayName();
         }
     }
 

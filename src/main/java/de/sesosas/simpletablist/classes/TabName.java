@@ -9,7 +9,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 public class TabName {
     public static void Update(){
         for (Player player : Bukkit.getOnlinePlayers()) {
-            player.setPlayerListName(Nametag.luckpermsName(player));
+            player.setPlayerListName(player.getDisplayName());
         }
     }
 }

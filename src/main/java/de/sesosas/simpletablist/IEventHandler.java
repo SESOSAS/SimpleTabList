@@ -20,8 +20,8 @@ public class IEventHandler implements Listener {
     public void OnPlayerJoin(PlayerJoinEvent event){
         TabHeadFoot.Update();
         TabName.Update();
+        Nametag.luckpermsName(event.getPlayer());
         if(SimpleTabList.getPlugin().config.getBoolean("Event.Use")){
-
             new UpdateChecker(SimpleTabList.getPlugin(), 101989).getVersion(version -> {
                 if (!SimpleTabList.getPlugin().getDescription().getVersion().equals(version)) {
                     if(event.getPlayer().isOp()){
@@ -61,7 +61,7 @@ public class IEventHandler implements Listener {
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         String message = event.getMessage();
-        String nametag = Nametag.luckpermsName(event.getPlayer());
+        String nametag = event.getPlayer().getDisplayName();
 
         CustomConfig.setup(event.getPlayer());
         FileConfiguration con = CustomConfig.get();
