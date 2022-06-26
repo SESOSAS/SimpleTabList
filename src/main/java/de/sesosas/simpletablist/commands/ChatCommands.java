@@ -6,38 +6,96 @@ import de.sesosas.simpletablist.message.MessageHandler;
 import de.sesosas.simpletablist.permissions.PermissionsHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-public class ChatCommands{
+import java.util.ArrayList;
+import java.util.List;
 
-    public static void Do(Player player, String[] args){
-        if(args.length >= 2){
-            if(args[1].equalsIgnoreCase("clear")){
-                ClearChat(player, args);
-            }
-            else if(args[1].equalsIgnoreCase("staff")){
-                StaffChat(player, args);
-            }
-            else if(args[1].equalsIgnoreCase("mute")){
-                MutePlayer(player, args);
-            }
-            else if(args[1].equalsIgnoreCase("unmute")){
-                UnmutePlayer(player, args);
+public class ChatCommands implements TabExecutor {
+
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        try{
+            if(sender instanceof Player){
+                Player player = ((Player) sender).getPlayer();
+                if(args.length >= 1){
+                    if(args[0].equalsIgnoreCase("clear")){
+                        ClearChat(player, args);
+                    }
+                    else if(args[0].equalsIgnoreCase("staff")){
+                        StaffChat(player, args);
+                    }
+                    else if(args[0].equalsIgnoreCase("mute")){
+                        MutePlayer(player, args);
+                    }
+                    else if(args[0].equalsIgnoreCase("unmute")){
+                        UnmutePlayer(player, args);
+                    }
+                    else{
+                        MessageHandler.Send(player, ChatColor.DARK_RED + "This command doesn't exist!");
+                    }
+                }
+                else{
+                    MessageHandler.Send(player, ChatColor.DARK_RED + "You need to provide <clear/staff>!");
+                }
             }
             else{
-                MessageHandler.Send(player, ChatColor.DARK_RED + "This command doesn't exist!");
+                sender.sendMessage("You are not be able to use this command!");
+            }
+        }
+        catch(Exception e){
+
+        }
+        return true;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        Player player = (Player) sender;
+        if(args.length == 1){
+            List<String> arguments = new ArrayList<>();
+            if(PermissionsHandler.hasPermission(player, "stl.chat.staff")){
+                arguments.add("staff");
+                arguments.add("mute");
+                arguments.add("unmute");
+            }
+            if(PermissionsHandler.hasPermission(player, "stl.chat.clear")){
+                arguments.add("clear");
+            }
+            return arguments;
+        }
+        else if(args.length == 2){
+            if(args[0].equalsIgnoreCase("staff")){
+                List<String> arguments = new ArrayList<>();
+                if(PermissionsHandler.hasPermission(player, "stl.chat.staff")){
+                    arguments.add("enable");
+                    arguments.add("disable");
+                    return arguments;
+                }
+            }
+            else{
+                List<String> arguments = new ArrayList<>();
+                for(Player pl : Bukkit.getOnlinePlayers()){
+                    arguments.add(pl.getName());
+                }
+                return arguments;
             }
         }
         else{
-            MessageHandler.Send(player, ChatColor.DARK_RED + "You need to provide <clear/staff>!");
+            return null;
         }
+        return null;
     }
 
     private static void MutePlayer(Player player, String[] args){
-        if(args.length == 3){
+        if(args.length == 2){
             if(PermissionsHandler.hasPermission(player, "stl.chat.staff")){
-                Player target = Bukkit.getPlayer(args[2]);
+                Player target = Bukkit.getPlayer(args[1]);
                 if(target != null){
                     CustomConfig.setup(target);
                     FileConfiguration con = CustomConfig.get();
@@ -60,9 +118,9 @@ public class ChatCommands{
     }
 
     private static void UnmutePlayer(Player player, String[] args){
-        if(args.length == 3){
+        if(args.length == 2){
             if(PermissionsHandler.hasPermission(player, "stl.chat.staff")){
-                Player target = Bukkit.getPlayer(args[2]);
+                Player target = Bukkit.getPlayer(args[1]);
                 if(target != null){
                     CustomConfig.setup(target);
                     FileConfiguration con = CustomConfig.get();
@@ -82,8 +140,7 @@ public class ChatCommands{
     }
 
     private static void ClearChat(Player player, String[] args) {
-
-        if(args.length == 3){
+        if(args.length == 2){
             if(PermissionsHandler.hasPermission(player, "stl.chat.clear.other")){
                 try{
                     Player target = Bukkit.getPlayer(args[2]);
@@ -94,7 +151,7 @@ public class ChatCommands{
                     MessageHandler.Send(player, ChatColor.AQUA + "Cleared the chat of "+ target.getDisplayName());
                 }
                 catch (Exception e){
-                    MessageHandler.Send(player, ChatColor.DARK_RED + "Couldn't clear the chat of "+args[2]);
+                    MessageHandler.Send(player, ChatColor.DARK_RED + "Couldn't clear the chat of "+args[1]);
                 }
             }
             else{
@@ -116,11 +173,11 @@ public class ChatCommands{
 
 
     private static void StaffChat(Player player, String[] args) {
-        if(args.length == 3){
+        if(args.length == 2){
             if(PermissionsHandler.hasPermission(player, "stl.chat.staff")){
                 CustomConfig.setup(player);
                 FileConfiguration con = CustomConfig.get();
-                if(args[2].equalsIgnoreCase("enable")){
+                if(args[1].equalsIgnoreCase("enable")){
                     if(con.getBoolean("Chat.Staff")){
                         MessageHandler.Send(player, ChatColor.DARK_RED + "Staff chat already enabled!");
                     }
@@ -131,7 +188,7 @@ public class ChatCommands{
                         MessageHandler.Send(player, ChatColor.YELLOW + "Staff chat is now enabled!");
                     }
                 }
-                else if(args[2].equalsIgnoreCase("disable")){
+                else if(args[1].equalsIgnoreCase("disable")){
                     if(con.getBoolean("Chat.Staff")){
                         con.set("Chat.Staff", false);
                         CustomConfig.save();

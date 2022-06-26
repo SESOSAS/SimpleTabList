@@ -24,15 +24,9 @@ public class CommandHandler implements TabExecutor {
             if(sender instanceof Player) {
                 Player player = (Player) sender;
                 List<String> commands = new ArrayList<>();
-                commands.add("chat");
-                commands.add("homes");
                 commands.add("reload");
 
-                if (args[0].equalsIgnoreCase(commands.get(0))) {
-                    ChatCommands.Do(player, args);
-                } else if (args[0].equalsIgnoreCase(commands.get(1))) {
-                    HomeCommand.Do(player, args);
-                } else if(args[0].equalsIgnoreCase(commands.get(2))) {
+                if(args[0].equalsIgnoreCase(commands.get(2))) {
                     ReloadCommand.Do(player, args);
                 } else {
                     MessageHandler.Send(player, ChatColor.DARK_RED + "This Command doesn't exists!");
@@ -47,7 +41,8 @@ public class CommandHandler implements TabExecutor {
             if(sender instanceof Player) {
                 Player player = (Player) sender;
                 MessageHandler.Send(player, ChatColor.AQUA + "Commands:"
-                        + "\n - /stl chat <args>"
+                        + "\n - /chat <args>"
+                        + "\n - /home <args>"
                         + "\n - /stl reload");
             }
             else{
@@ -63,114 +58,10 @@ public class CommandHandler implements TabExecutor {
         Player player = (Player) sender;
         if (args.length == 1) {
             List<String> arguments = new ArrayList<>();
-            arguments.add("chat");
-
-            if(PermissionsHandler.hasPermission(player, "stl.home")){
-                if(SimpleTabList.getPlugin().config.getBoolean("Homes.Use")){
-                    arguments.add("homes");
-                }
-            }
             if (PermissionsHandler.hasPermission(player, "stl.reload")) {
                 arguments.add("reload");
             }
             return arguments;
-        }
-        else if(args.length == 2){
-            List<String> arguments = new ArrayList<>();
-            CustomConfig.setup(player);
-            FileConfiguration con = CustomConfig.get();
-            if(args[0].equalsIgnoreCase("homes")){
-                if(SimpleTabList.getPlugin().config.getBoolean("Homes.Use")){
-                    if(PermissionsHandler.hasPermission(player, "stl.home.add")){
-                        arguments.add("add");
-                        arguments.add("remove");
-                        arguments.add("set");
-                        if(PermissionsHandler.hasPermission(player, "stl.home")){
-                            for(int i = 1; i <= SimpleTabList.getPlugin().config.getInt("Homes.Amount"); i++){
-                                if(con.get("Homes."+i) != null){
-                                    if(!con.getString("Homes."+i+".Name").equalsIgnoreCase("Deleted")){
-                                        arguments.add(con.getString("Homes."+i+".Name"));
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            else{
-                if(PermissionsHandler.hasPermission(player, "stl.chat.staff")){
-                    arguments.add("staff");
-                    arguments.add("mute");
-                    arguments.add("unmute");
-                }
-
-                if(PermissionsHandler.hasPermission(player, "stl.chat.clear")){
-                    arguments.add("clear");
-                }
-                return arguments;
-            }
-            return arguments;
-        }
-        else if(args.length == 3){
-            if(args[1].equalsIgnoreCase("staff")){
-                if(PermissionsHandler.hasPermission(player, "stl.chat.staff")){
-                    List<String> arguments = new ArrayList<>();
-                    arguments.add("enable");
-                    arguments.add("disable");
-                    return arguments;
-                }
-                else{
-                    return null;
-                }
-            }
-            else if(args[1].equalsIgnoreCase("remove")){
-                if(SimpleTabList.getPlugin().config.getBoolean("Homes.Use")){
-                    CustomConfig.setup(player);
-                    FileConfiguration con = CustomConfig.get();
-                    List<String> arguments = new ArrayList<>();
-                    for(int i = 1; i <= SimpleTabList.getPlugin().config.getInt("Homes.Amount"); i++){
-                        if(con.get("Homes."+i) != null){
-                            if(!con.getString("Homes."+i+".Name").equalsIgnoreCase("Deleted")){
-                                arguments.add(con.getString("Homes."+i+".Name"));
-                            }
-                        }
-                    }
-                    return arguments;
-                }
-                else{
-                    return null;
-                }
-            }
-            else if(args[1].equalsIgnoreCase("set")){
-                if(SimpleTabList.getPlugin().config.getBoolean("Homes.Use")){
-                    CustomConfig.setup(player);
-                    FileConfiguration con = CustomConfig.get();
-                    List<String> arguments = new ArrayList<>();
-                    for(int i = 1; i <= SimpleTabList.getPlugin().config.getInt("Homes.Amount"); i++){
-                        if(con.get("Homes."+i) != null){
-                            if(!con.getString("Homes."+i+".Name").equalsIgnoreCase("Deleted")){
-                                arguments.add(con.getString("Homes."+i+".Name"));
-                            }
-                        }
-                    }
-                    return arguments;
-                }
-                else{
-                    return null;
-                }
-            }
-            else{
-                if(PermissionsHandler.hasPermission(player, "stl.chat.clear.other")){
-                    List<String> arguments = new ArrayList<>();
-                    for(Player player1 : Bukkit.getOnlinePlayers()){
-                        arguments.add(player1.getPlayer().getName());
-                    }
-                    return arguments;
-                }
-                else{
-                    return null;
-                }
-            }
         }
         else{
             return null;

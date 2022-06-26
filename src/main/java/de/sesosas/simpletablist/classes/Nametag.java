@@ -26,6 +26,8 @@ public class Nametag {
                 }
 
                 player.setDisplayName(prefix + name + suffix);
+                player.setCustomName(prefix + name + suffix);
+                player.setCustomNameVisible(true);
         }
         else{
             System.out.println("Didn't found LuckPerms which is necessary for this Plugin!");

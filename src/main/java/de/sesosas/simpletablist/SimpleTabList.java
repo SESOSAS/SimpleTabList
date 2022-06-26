@@ -2,6 +2,8 @@ package de.sesosas.simpletablist;
 
 import de.sesosas.simpletablist.classes.TabHeadFoot;
 import de.sesosas.simpletablist.classes.TabName;
+import de.sesosas.simpletablist.commands.ChatCommands;
+import de.sesosas.simpletablist.commands.HomeCommand;
 import de.sesosas.simpletablist.message.MessageHandler;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.event.EventBus;
@@ -96,6 +98,8 @@ public final class SimpleTabList extends JavaPlugin implements Listener {
 
         getServer().getPluginManager().registerEvents(new IEventHandler(), this);
         getCommand("stl").setExecutor(new CommandHandler());
+        getCommand("home").setExecutor(new HomeCommand());
+        getCommand("chat").setExecutor(new ChatCommands());
         System.out.println("Simple TabList has started!");
     }
 
