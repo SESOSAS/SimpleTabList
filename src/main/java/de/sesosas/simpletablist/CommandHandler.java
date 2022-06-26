@@ -26,7 +26,7 @@ public class CommandHandler implements TabExecutor {
                 List<String> commands = new ArrayList<>();
                 commands.add("reload");
 
-                if(args[0].equalsIgnoreCase(commands.get(2))) {
+                if(args[0].equalsIgnoreCase(commands.get(0))) {
                     ReloadCommand.Do(player, args);
                 } else {
                     MessageHandler.Send(player, ChatColor.DARK_RED + "This Command doesn't exists!");

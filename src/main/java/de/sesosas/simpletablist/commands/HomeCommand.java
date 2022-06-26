@@ -70,7 +70,7 @@ public class HomeCommand implements TabExecutor {
                                 MessageHandler.Send(player, ChatColor.RED + "You are not allowed to use this command!");
                             }
                         }
-                        else if(args[1].equalsIgnoreCase("set")){
+                        else if(args[0].equalsIgnoreCase("set")){
                             if(PermissionsHandler.hasPermission(player, "stl.home.add")){
                                 if(args.length >= 2){
                                     for(int i = 1; i <= SimpleTabList.getPlugin().config.getInt("Homes.Amount"); i++){
@@ -96,7 +96,7 @@ public class HomeCommand implements TabExecutor {
                                 MessageHandler.Send(player, ChatColor.RED + "You are not allowed to use this command!");
                             }
                         }
-                        else if(args[1].equalsIgnoreCase("remove")){
+                        else if(args[0].equalsIgnoreCase("remove")){
                             if(PermissionsHandler.hasPermission(player, "stl.home.add")){
                                 if(args.length >= 2){
                                     for(int i = 1; i <= SimpleTabList.getPlugin().config.getInt("Homes.Amount"); i++){
@@ -168,6 +168,7 @@ public class HomeCommand implements TabExecutor {
                     }
                 }
             }
+            return arguments;
         }
         if(args[0].equalsIgnoreCase("remove")){
             if(SimpleTabList.getPlugin().config.getBoolean("Homes.Use")){
