@@ -143,7 +143,7 @@ public class ChatCommands implements TabExecutor {
         if(args.length == 2){
             if(PermissionsHandler.hasPermission(player, "stl.chat.clear.other")){
                 try{
-                    Player target = Bukkit.getPlayer(args[2]);
+                    Player target = Bukkit.getPlayer(args[1]);
                     for(int i=0; i<200; i++)
                     {
                         target.sendMessage("");

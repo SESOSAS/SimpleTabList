@@ -151,59 +151,78 @@ public class HomeCommand implements TabExecutor {
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         Player player = (Player) sender;
         if(SimpleTabList.getPlugin().config.getBoolean("Homes.Use")){
-            List<String> arguments = new ArrayList<>();
-            CustomConfig.setup(player);
-            FileConfiguration con = CustomConfig.get();
-            if(PermissionsHandler.hasPermission(player, "stl.home.add")){
-                arguments.add("add");
-                arguments.add("remove");
-                arguments.add("set");
-                if(PermissionsHandler.hasPermission(player, "stl.home")){
-                    for(int i = 1; i <= SimpleTabList.getPlugin().config.getInt("Homes.Amount"); i++){
-                        if(con.get("Homes."+i) != null){
-                            if(!con.getString("Homes."+i+".Name").equalsIgnoreCase("Deleted")){
-                                arguments.add(con.getString("Homes."+i+".Name"));
+            if(args.length == 1){
+                List<String> arguments = new ArrayList<>();
+                CustomConfig.setup(player);
+                FileConfiguration con = CustomConfig.get();
+                if(PermissionsHandler.hasPermission(player, "stl.home.add")){
+                    arguments.add("add");
+                    arguments.add("remove");
+                    arguments.add("set");
+                    if(PermissionsHandler.hasPermission(player, "stl.home")){
+                        for(int i = 1; i <= SimpleTabList.getPlugin().config.getInt("Homes.Amount"); i++){
+                            if(con.get("Homes."+i) != null){
+                                if(!con.getString("Homes."+i+".Name").equalsIgnoreCase("Deleted")){
+                                    arguments.add(con.getString("Homes."+i+".Name"));
+                                }
                             }
                         }
                     }
+                    return arguments;
                 }
             }
-            return arguments;
-        }
-        if(args[0].equalsIgnoreCase("remove")){
-            if(SimpleTabList.getPlugin().config.getBoolean("Homes.Use")){
-                CustomConfig.setup(player);
-                FileConfiguration con = CustomConfig.get();
-                List<String> arguments = new ArrayList<>();
-                for(int i = 1; i <= SimpleTabList.getPlugin().config.getInt("Homes.Amount"); i++){
-                    if(con.get("Homes."+i) != null){
-                        if(!con.getString("Homes."+i+".Name").equalsIgnoreCase("Deleted")){
-                            arguments.add(con.getString("Homes."+i+".Name"));
+            if(args.length >= 2){
+                if(args[0].equalsIgnoreCase("remove")){
+                    if(SimpleTabList.getPlugin().config.getBoolean("Homes.Use")){
+                        CustomConfig.setup(player);
+                        FileConfiguration con = CustomConfig.get();
+                        List<String> arguments = new ArrayList<>();
+                        for(int i = 1; i <= SimpleTabList.getPlugin().config.getInt("Homes.Amount"); i++){
+                            if(con.get("Homes."+i) != null){
+                                if(!con.getString("Homes."+i+".Name").equalsIgnoreCase("Deleted")){
+                                    arguments.add(con.getString("Homes."+i+".Name"));
+                                }
+                            }
                         }
+                        return arguments;
+                    }
+                    else{
+                        return null;
                     }
                 }
-                return arguments;
-            }
-            else{
-                return null;
-            }
-        }
-        if(args[0].equalsIgnoreCase("set")){
-            if(SimpleTabList.getPlugin().config.getBoolean("Homes.Use")){
-                CustomConfig.setup(player);
-                FileConfiguration con = CustomConfig.get();
-                List<String> arguments = new ArrayList<>();
-                for(int i = 1; i <= SimpleTabList.getPlugin().config.getInt("Homes.Amount"); i++){
-                    if(con.get("Homes."+i) != null){
-                        if(!con.getString("Homes."+i+".Name").equalsIgnoreCase("Deleted")){
-                            arguments.add(con.getString("Homes."+i+".Name"));
+                if(args[0].equalsIgnoreCase("set")){
+                    if(SimpleTabList.getPlugin().config.getBoolean("Homes.Use")){
+                        CustomConfig.setup(player);
+                        FileConfiguration con = CustomConfig.get();
+                        List<String> arguments = new ArrayList<>();
+                        for(int i = 1; i <= SimpleTabList.getPlugin().config.getInt("Homes.Amount"); i++){
+                            if(con.get("Homes."+i) != null){
+                                if(!con.getString("Homes."+i+".Name").equalsIgnoreCase("Deleted")){
+                                    arguments.add(con.getString("Homes."+i+".Name"));
+                                }
+                            }
                         }
+                        return arguments;
+                    }
+                    else{
+                        return null;
                     }
                 }
-                return arguments;
-            }
-            else{
-                return null;
+                else{
+                    List<String> arguments = new ArrayList<>();
+                    CustomConfig.setup(player);
+                    FileConfiguration con = CustomConfig.get();
+                    if(PermissionsHandler.hasPermission(player, "stl.home")){
+                        for(int i = 1; i <= SimpleTabList.getPlugin().config.getInt("Homes.Amount"); i++){
+                            if(con.get("Homes."+i) != null){
+                                if(!con.getString("Homes."+i+".Name").equalsIgnoreCase("Deleted")){
+                                    arguments.add(con.getString("Homes."+i+".Name"));
+                                }
+                            }
+                        }
+                    }
+                    return arguments;
+                }
             }
         }
         return null;
